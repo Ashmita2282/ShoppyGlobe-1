@@ -1,8 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const userRoutes = require("./routes/userRoutes");
+const { connect } = require("./config/database"); // Import the connect function
+
 require("dotenv").config();
 
 const app = express();
@@ -12,11 +13,7 @@ app.use("/api", productRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", userRoutes);
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => console.log("MongoDB connection error:", err));
+// Connect to MongoDB
+connect();
 
 module.exports = app;
